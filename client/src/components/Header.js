@@ -2,29 +2,29 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 class Header extends Component {
+  state = {
+    burger: false
+  }
+
+  clickHandler = (e) => {
+    this.setState(state => ({ burger: !state.burger}))
+  }
+
   render() {
+    const { burger } = this.state
     return (
-      <nav className="navbar is-transparent">
+      <nav class="navbar is-transparent">
         <div className="navbar-brand">
-          <div className="navbar-item">
-            <Link to="/">JobHub</Link>
-          </div>
-          <div
-            class="navbar-burger burger"
-            data-target="navbarExampleTransparentExample"
-          >
-            <span />
-            <span />
+          <Link className="navbar-item" to="/"><span className="has-text-weight-bold">JobHub</span></Link>
+          <div onClick={this.clickHandler} className={burger ? "navbar-burger burger is-active" : "navbar-burger burger"} data-target="navbarTransparent">
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
         </div>
-        <div id="navbarExampleTransparentExample" class="navbar-menu">
-          <div className="navbar-start">
-            <div className="navbar-item">
-              <Link to="/">Home</Link>
-            </div>
-          </div>
+        <div id="navbarTransparent" className={burger? "navbar-menu is-active" : "navbar-menu"}>
           <div className="navbar-end">
-            <Link className="navbar-item" to="/signin">Sign In</Link>
+            <Link to="/signin" className="navbar-item">Sign In</Link>
           </div>
         </div>
       </nav>

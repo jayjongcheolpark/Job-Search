@@ -40,7 +40,7 @@ class LoginForm extends Component {
     return (
       <div className="columns is-mobile is-centered">
         <form
-          className="column is-two-thirds-mobile is-half-tablet"
+          className="column is-four-fifths-mobile is-half-tablet"
           onSubmit={this.onSubmit}
         >
           <div className="field">
