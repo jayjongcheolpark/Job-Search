@@ -1,4 +1,4 @@
-import { combineReducers, createStore, compose, applyMiddleware } from 'redux'
+import { combineReducers, createStore } from 'redux'
 
 function reducer(state = {}, action) {
   return state

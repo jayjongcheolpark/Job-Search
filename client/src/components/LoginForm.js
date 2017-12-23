@@ -15,7 +15,6 @@ class LoginForm extends Component {
   onSubmit = event => {
     event.preventDefault()
     const { email, password } = this.state
-    console.log(email, password)
     this.props
       .mutate({
         variables: { email, password }
@@ -35,28 +34,57 @@ class LoginForm extends Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/mylist" />
+    }
     return (
-      <form className="mt-5">
-        <div className="form-group">
-          <input
-            type="email"
-            className="form-control"
-            placeholder="example@jobhub.live"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="password"
-            className="form-control"
-            placeholder="password"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <button className="btn btn-primary btn-lg btn-block">Sign In</button>
-        </div>
-      </form>
+      <div className="columns is-mobile is-centered">
+        <form
+          className="column is-two-thirds-mobile is-half-tablet"
+          onSubmit={this.onSubmit}
+        >
+          <div className="field">
+            <div className="control has-icons-left">
+              <input
+                type="email"
+                className="input is-medium"
+                placeholder="example@jobhub.live"
+                value={this.state.email}
+                onChange={this.handleChange('email')}
+                required
+              />
+              <span className="icon is-small is-left">
+                <i className="fa fa-envelope" />
+              </span>
+            </div>
+          </div>
+          <div className="field">
+            <div className="control has-icons-left">
+              <input
+                type="password"
+                className="input is-medium"
+                placeholder="password"
+                value={this.state.password}
+                onChange={this.handleChange('password')}
+                required
+              />
+              <span class="icon is-small is-left">
+                <i class="fa fa-lock" />
+              </span>
+            </div>
+          </div>
+          <div className="field">
+            <div className="control has-text-centered">
+              <button
+                className="button is-medium is-link has-text-weight-bold"
+                style={{ width: '100%' }}
+              >
+                Sign In
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     )
   }
 }
