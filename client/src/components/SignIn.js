@@ -1,45 +1,20 @@
 import React, { Component } from 'react'
-import { Link } from  'react-router-dom'
-import { withStyles } from 'material-ui/styles'
-import Paper from 'material-ui/Paper'
-import Grid from 'material-ui/Grid'
+import { Link } from 'react-router-dom'
 import LoginForm from './LoginForm'
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    marginTop: 30
-  },
-  paper: {
-    padding: 16,
-    textAlign: 'center',
-    color: theme.palette.text.secondary
-  }
-})
 
 class SignIn extends Component {
   render() {
-    const { classes } = this.props
     return (
-      <div className={classes.root}>
-      <Grid container justify="center">
-        <Grid item xs={11} sm={8} md={6} lg={5}>
-          <Paper className={classes.paper}>
-            <h1>Sign in to JobHub</h1>
-            <LoginForm />
-            <hr />
-            <p>
-              New to JobHub ?
-              <Link style={{ marginLeft: "10px" }} to="/signup">
-                Create an account
-              </Link>.
-            </p>
-          </Paper>
-        </Grid>
-      </Grid>
-    </div>
+      <div className="row justify-content-center">
+        <div className="col-xs-8 col-sm-8 col-md-6 jumbotron mt-5">
+          <h1 className="text-center">Sign in to JobHub</h1>
+          <LoginForm />
+          <hr />
+          New to JobHub ? <Link to="signup">Create an account</Link>.
+        </div>
+      </div>
     )
   }
 }
 
-export default withStyles(styles)(SignIn)
+export default SignIn

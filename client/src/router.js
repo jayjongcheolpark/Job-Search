@@ -9,7 +9,7 @@ import WithHeader from './components/Header'
 const Router = () => {
   return (
     <BrowserRouter>
-      <div>
+      <div className="container">
         <Switch>
           <Route
             exact
@@ -17,7 +17,7 @@ const Router = () => {
             render={props => WithHeader(App)({ ...props, title: 'JobHub' })}
           />
           <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/login" component={SignIn} />
+          <Route exact path="/signin" component={SignIn} />
           <Route
             exact
             path="/mylist"

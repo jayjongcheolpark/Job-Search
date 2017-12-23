@@ -1,38 +1,17 @@
 import React, { Component } from 'react'
-import { withStyles } from 'material-ui/styles'
-import Paper from 'material-ui/Paper'
-import Grid from 'material-ui/Grid'
 import SignupForm from './SignupForm'
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    marginTop: 30
-  },
-  paper: {
-    padding: 16,
-    textAlign: 'center',
-    color: theme.palette.text.secondary
-  }
-})
 
 class SignUp extends Component {
   render() {
-    const { classes } = this.props
     return (
-      <div className={classes.root}>
-      <Grid container justify="center">
-        <Grid item xs={9} sm={6} md={4} lg={3}>
-          <Paper className={classes.paper}>
-            <h1>Join JobHub</h1>
-            <SignupForm />
-          </Paper>
-        </Grid>
-      </Grid>
-    </div>
+      <div className="row justify-content-center">
+        <div className="col-xs-8 col-sm-8 col-md-6 jumbotron mt-5">
+          <h1 className="text-center">Join JobHub</h1>
+          <SignupForm />
+        </div>
+      </div>
     )
   }
 }
 
-export default withStyles(styles)(SignUp)
-
+export default SignUp
