@@ -17,7 +17,8 @@ class LoginForm extends Component {
     const { email, password } = this.state
     this.props
       .mutate({
-        variables: { email, password }
+        variables: { email, password },
+        refetchQueries: [{ query }]
       })
       .then(res => this.setState({ redirect: true }))
       .catch(res => {
@@ -68,8 +69,8 @@ class LoginForm extends Component {
                 onChange={this.handleChange('password')}
                 required
               />
-              <span class="icon is-small is-left">
-                <i class="fa fa-lock" />
+              <span className="icon is-small is-left">
+                <i className="fa fa-lock" />
               </span>
             </div>
           </div>

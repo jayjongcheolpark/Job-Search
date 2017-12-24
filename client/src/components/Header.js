@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { graphql, compose } from 'react-apollo'
+import query from '../queries/CurrentUser'
+import mutation from '../mutations/Logout'
 
 class Header extends Component {
   state = {
@@ -10,10 +13,35 @@ class Header extends Component {
     this.setState(state => ({ burger: !state.burger}))
   }
 
+  onLogout = () => {
+    this.props.mutate({
+      refetchQueries: [{ query }]
+    })
+  }
+
+  renderButtons() {
+    console.log(this.props)
+    const { loading, user } = this.props.data
+
+    if (loading) {
+      return <div />
+    }
+
+    if (user) {
+      return (
+        <a className="navbar-item" onClick={this.onLogout}>Logout</a>
+      )
+    } else {
+      return (
+        <Link to="/signin" className="navbar-item">Sign In</Link>
+      )
+    }
+  }
+
   render() {
     const { burger } = this.state
     return (
-      <nav class="navbar is-transparent">
+      <nav className="navbar is-transparent">
         <div className="navbar-brand">
           <Link className="navbar-item" to="/"><span className="has-text-weight-bold">JobHub</span></Link>
           <div onClick={this.clickHandler} className={burger ? "navbar-burger burger is-active" : "navbar-burger burger"} data-target="navbarTransparent">
@@ -24,7 +52,7 @@ class Header extends Component {
         </div>
         <div id="navbarTransparent" className={burger? "navbar-menu is-active" : "navbar-menu"}>
           <div className="navbar-end">
-            <Link to="/signin" className="navbar-item">Sign In</Link>
+            {this.renderButtons()}
           </div>
         </div>
       </nav>
@@ -32,11 +60,13 @@ class Header extends Component {
   }
 }
 
+const WithGraphHeader = compose(graphql(mutation), graphql(query))(Header)
+
 export default WrappedComonent => {
   function WithHeader(props) {
     return (
       <div>
-        <Header {...props} />
+        <WithGraphHeader {...props} />
         <WrappedComonent {...props} />
       </div>
     )

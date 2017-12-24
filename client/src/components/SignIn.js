@@ -8,7 +8,7 @@ class SignIn extends Component {
       <div className="hero">
         <div className="hero-body">
           <div className="container">
-            <h1 className="title is-size-3-mobile is-size-1-tablet has-text-grey-darker has-text-centered">Sign in to JobHub</h1>
+            <h1 className="title is-size-3-mobile is-size-2-tablet has-text-grey-darker has-text-centered">Sign in to JobHub</h1>
             <LoginForm />
             <hr />
             <div className="subtitle has-text-grey has-text-centered">

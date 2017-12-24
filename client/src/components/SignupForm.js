@@ -43,8 +43,8 @@ class SignupForm extends Component {
                 onChange={this.handleChange('password')}
                 required
               />
-              <span class="icon is-small is-left">
-                <i class="fa fa-lock" />
+              <span className="icon is-small is-left">
+                <i className="fa fa-lock" />
               </span>
             </div>
           </div>
@@ -58,8 +58,8 @@ class SignupForm extends Component {
                 onChange={this.handleChange('password')}
                 required
               />
-              <span class="icon is-small is-left">
-                <i class="fa fa-lock" />
+              <span className="icon is-small is-left">
+                <i className="fa fa-lock" />
               </span>
             </div>
           </div>
