@@ -24,7 +24,7 @@ client.query({ query: gql`
 `}).then(console.log)
 client.mutate({ mutation: gql`
   mutation {
-    login(email: "test.com", password: "i12fly") {
+    login(email: "test@jay.com", password: "1234") {
       id
       email
     }

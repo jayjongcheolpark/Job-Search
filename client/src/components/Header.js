@@ -20,7 +20,6 @@ class Header extends Component {
   }
 
   renderButtons() {
-    console.log(this.props)
     const { loading, user } = this.props.data
 
     if (loading) {
