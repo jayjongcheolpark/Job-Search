@@ -4,7 +4,6 @@ import query from '../queries/CurrentUser'
 
 class MyJobList extends Component {
   render () {
-    console.log(this.props)
     return (
       <div>
         MyJobList

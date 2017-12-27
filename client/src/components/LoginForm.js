@@ -15,7 +15,6 @@ class LoginForm extends Component {
   onSubmit = event => {
     event.preventDefault()
     const { email, password } = this.state
-    console.log(this.props)
     this.props
       .mutate({
         variables: { email, password },
