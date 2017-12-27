@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
+import { graphql } from 'react-apollo'
+import query from '../queries/CurrentUser'
+import mutation from '../mutations/Signup'
 
 class SignupForm extends Component {
   state = {
-    email: ''
+    email: '',
+    password: '',
+    confirmPassword: '',
+    redirect: false,
+    errors: []
   }
 
   handleChange = name => event => {
@@ -11,7 +19,33 @@ class SignupForm extends Component {
     })
   }
 
+  onSubmit= e => {
+    e.preventDefault()
+    const { email, password, confirmPassword } = this.state
+    if (password !== confirmPassword) {
+      const errors = []
+      errors.push("Password is different from confirm password")
+      this.setState({ errors })
+    }
+    this.props
+      .mutate({
+        variables: { email, password },
+        refetchQueries: [{ query }]
+      })
+      .then(res => {
+        this.setState({ redirect: true })
+      })
+      .catch(res => {
+        const errors = res.graphQLErrors.map(error => error.message)
+        console.log(errors)
+        this.setState({ errors })
+      })
+  }
+
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/mylist" />
+    }
     return (
       <div className="columns is-mobile is-centered">
         <form
@@ -54,8 +88,8 @@ class SignupForm extends Component {
                 type="password"
                 className="input is-medium"
                 placeholder="confirm password"
-                value={this.state.password}
-                onChange={this.handleChange('password')}
+                value={this.state.confirmPassword}
+                onChange={this.handleChange('confirmPassword')}
                 required
               />
               <span className="icon is-small is-left">
@@ -79,4 +113,4 @@ class SignupForm extends Component {
   }
 }
 
-export default SignupForm
+export default graphql(mutation)(graphql(query)(SignupForm))

@@ -43,13 +43,20 @@ app.use(
   })
 )
 
+
+// enable cors
+var corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true // <-- REQUIRED backend setting
+};
+app.use(cors(corsOptions));
+
 // Passport is wired into express as a middleware. When a request comes in,
 // Passport will examine the request's session (as set by the above config) and
 // assign the current user to the 'req.user' object.  See also servces/auth.js
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use(cors())
 // Instruct Express to pass on any request made to the '/graphql' route
 // to the GraphQL instance.
 app.use(

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import mutation from '../mutations/Login'
 import query from '../queries/CurrentUser'
-import { graphql, compose } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import { Redirect } from 'react-router-dom'
 
 class LoginForm extends Component {
@@ -15,12 +15,15 @@ class LoginForm extends Component {
   onSubmit = event => {
     event.preventDefault()
     const { email, password } = this.state
+    console.log(this.props)
     this.props
       .mutate({
         variables: { email, password },
         refetchQueries: [{ query }]
       })
-      .then(res => this.setState({ redirect: true }))
+      .then(res => {
+        this.setState({ redirect: true })
+      })
       .catch(res => {
         const errors = res.graphQLErrors.map(error => error.message)
         console.log(errors)
@@ -90,6 +93,4 @@ class LoginForm extends Component {
   }
 }
 
-const componentWithData = compose(graphql(query), graphql(mutation))(LoginForm)
-
-export default componentWithData
+export default graphql(query)(graphql(mutation)(LoginForm))
