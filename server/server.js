@@ -7,14 +7,15 @@ const passport = require('passport')
 const passportConfig = require('./services/auth')
 const MongoStore = require('connect-mongo')(session)
 const schema = require('./schema/schema')
-const cors = require('cors')
 require('dotenv').config()
 
 // Create a new Express application
 const app = express()
 
 // Replace with your mongoLab URI
-const MONGO_URI = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}`
+const MONGO_URI = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${
+  process.env.DB_HOST
+}`
 
 // Mongoose's built in promise library is deprecated, replace it with ES2015 Promise
 mongoose.Promise = global.Promise
@@ -26,32 +27,31 @@ mongoose.connection
   .once('open', () => console.log('Connected to MongoLab instance.'))
   .on('error', error => console.log('Error connecting to MongoLab:', error))
 
-  app.use(
-    function (req, res, next) {
+app.use(function(req, res, next) {
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
 
-      // Website you wish to allow to connect
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-
-      // Request methods you wish to allow
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-      // Request headers you wish to allow
-      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-      // Set to true if you need the website to include cookies in the requests sent
-      // to the API (e.g. in case you use sessions)
-      res.setHeader('Access-Control-Allow-Credentials', true);
-
-      // Pass to next layer of middleware
-
-      if (req.method === "OPTIONS") {
-          return res.status(200).end();
-      }
-
-      return next();
-  }
+  // Request methods you wish to allow
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, OPTIONS, PUT, PATCH, DELETE'
   )
 
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true)
+
+  // Pass to next layer of middleware
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end()
+  }
+
+  return next()
+})
 
 // Configures express to use sessions.  This places an encrypted identifier
 // on the users cookie.  When a user makes a request, this middleware examines
@@ -63,22 +63,13 @@ app.use(
     resave: true,
     saveUninitialized: true,
     secret: 'aaabbbccc',
-    cookie : { secure : false, maxAge : (4 * 60 * 60 * 1000) },
+    cookie: { secure: false, maxAge: 4 * 60 * 60 * 1000 },
     store: new MongoStore({
       url: MONGO_URI,
       autoReconnect: true
     })
   })
 )
-
-
-
-// enable cors
-var corsOptions = {
-  origin: 'http://localhost:3000',
-  credentials: true // <-- REQUIRED backend setting
-};
-// app.use(cors(corsOptions));
 
 // Passport is wired into express as a middleware. When a request comes in,
 // Passport will examine the request's session (as set by the above config) and
