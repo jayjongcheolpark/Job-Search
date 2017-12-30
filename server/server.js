@@ -4,6 +4,8 @@ const expressGraphQL = require('express-graphql')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const passport = require('passport')
+const cors = require('cors')
+
 const passportConfig = require('./services/auth')
 const MongoStore = require('connect-mongo')(session)
 const schema = require('./schema/schema')
@@ -27,31 +29,14 @@ mongoose.connection
   .once('open', () => console.log('Connected to MongoLab instance.'))
   .on('error', error => console.log('Error connecting to MongoLab:', error))
 
-app.use(function(req, res, next) {
-  // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
 
-  // Request methods you wish to allow
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-  )
-
-  // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
-
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  res.setHeader('Access-Control-Allow-Credentials', true)
-
-  // Pass to next layer of middleware
-
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end()
-  }
-
-  return next()
+const corsMiddleware = cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+  preflightContinue: false
 })
+app.use(corsMiddleware)
+app.options(corsMiddleware)
 
 // Configures express to use sessions.  This places an encrypted identifier
 // on the users cookie.  When a user makes a request, this middleware examines
@@ -71,6 +56,7 @@ app.use(
   })
 )
 
+
 // Passport is wired into express as a middleware. When a request comes in,
 // Passport will examine the request's session (as set by the above config) and
 // assign the current user to the 'req.user' object.  See also servces/auth.js
@@ -86,5 +72,7 @@ app.use(
     graphiql: true
   })
 )
+
+
 
 module.exports = app
