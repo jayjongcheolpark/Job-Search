@@ -6,7 +6,7 @@ class MyJobList extends Component {
   render () {
     return (
       <div>
-        MyJobList
+        {this.props.data.user && this.props.data.user.email}
       </div>
     )
   }
