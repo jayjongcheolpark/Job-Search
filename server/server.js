@@ -10,9 +10,12 @@ const db = require('./db')
 const passportConfig = require('./services/auth')
 const MongoStore = require('connect-mongo')(session)
 const schema = require('./schema/schema')
+const ParseService = require('./services/parseJobLink')
 
 const { MONGO_URI } = process.env
 
+let browser = null
+ParseService.openBrowser(browser)
 db.connect()
 // Create a new Express application
 const app = express()
