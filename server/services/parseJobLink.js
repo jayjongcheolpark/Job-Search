@@ -16,10 +16,11 @@ const closeBrowser = browser => {
 
 const parseJobLink = async url => {
   const parsedUrl = new URL(url)
-  const parsedData = null
+  let parsedData = null
     switch (parsedUrl.hostname) {
       case 'ca.indeed.com':
         parsedData = await parseByIndeed(page, parsedUrl.href)
+        console.log(parsedData)
         break
       default:
     }
