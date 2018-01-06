@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer')
 
 const parseByIndeed = async (page, url) => {
   let ret = null
-  console.log('start')
+  console.log('parseByIndeed')
   await page.goto(url)
   await page.waitFor(800)
   return await page.evaluate(() => {
