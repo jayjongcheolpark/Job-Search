@@ -28,6 +28,8 @@ const parseJobLink = async url => {
         parsedData = await parseByLinkedIn(page, parsedUrl.href)
         console.log(parsedData)
         break
+      case 'www.glassdoor.ca':
+        break
       default:
     }
 
