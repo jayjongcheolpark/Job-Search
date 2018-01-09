@@ -3,6 +3,7 @@ const puppeteer = require('puppeteer')
 
 const parseByIndeed = require('./sites/indeed')
 const parseByLinkedIn = require('./sites/linkedin')
+const parseByGlassdoor = require('./sites/glassdoor')
 
 let page = null
 
@@ -29,6 +30,8 @@ const parseJobLink = async url => {
         console.log(parsedData)
         break
       case 'www.glassdoor.ca':
+        parsedData = await parseByGlassdoor(page, parsedUrl.href)
+        console.log(parsedData)
         break
       default:
     }
